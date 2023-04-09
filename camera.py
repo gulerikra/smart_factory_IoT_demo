@@ -1,108 +1,60 @@
-# # import cv2
-# # import time
+# import cv2
+# import time
 
-# # # Kamera bağlantısını başlat
-# # cap = cv2.VideoCapture(0)
+# # Kamera bağlantısını başlat
+# cap = cv2.VideoCapture(0)
+# # Sayacı başlat
+# counter = 0
 
-# # # Sayacı başlat
-# # counter = 0
-
-# # while True:
-# #     # Kamera görüntüsünü oku
-# #     ret, frame = cap.read()
-
-# #     # Görüntüyü diske kaydet
-# #     cv2.imwrite("public/image.jpg", frame)
-
-# #     # 3 saniye bekle
-# #     time.sleep(3)
-
-# # # Kamera bağlantısını kapat
-# # cap.release()
-
-
-# import cv2  # OpenCV kütüphanesi
-# import numpy as np  # NumPy kütüphanesi
-# import urllib.request  # URL'leri açmak için kullanılan kütüphane
-
-# url = 'http://192.168.43.151/'  # IP adresi
-# # cv2.namedWindow("live transmission", cv2.WINDOW_AUTOSIZE)  # Görüntü penceresi oluşturma
-
-# counter = 0  # Counter başlangıç değeri
 # while True:
-#     if counter == 0 or counter % 3 == 0:  # Her üç turda bir kameradan görüntü al
-#         img_resp = urllib.request.urlopen(url + 'cam-hi.jpg')  # URL'den görüntü al
-#         imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)  # NumPy dizisine dönüştür
-#         frame = cv2.imdecode(imgnp, -1)  # Görüntüyü çözümle
+#     # Kamera görüntüsünü oku
+#     ret, frame = cap.read()
 
-#         cv2.imwrite('public/image.jpg', frame)  # Görüntüyü kaydet
+#     # Görüntüyü diske kaydet
+#     cv2.imwrite("public/image.jpg", frame)
 
-#         # cv2.imshow("live transmission", frame)  # Görüntüyü göster
-#         key = cv2.waitKey(1)
-#         if key == 27:  # ESC tuşuna basılırsa döngüyü sonlandır
-#             break
-#         counter += 1  # Counter değerini bir artır
+#     # 3 saniye bekle
+#     time.sleep(3)
 
-#     else:
-#         counter += 1  # Counter değerini bir artır
+# # Kamera bağlantısını kapat
+# cap.release()
 
-# cv2.destroyAllWindows()  
-
-
-# Görüntüyü kapat
 import cv2
 import numpy as np
 import urllib.request
+import cv2
+from ultralytics import YOLO # YOLOv5 modeli için ultralytics kütüphanesini kullanıyoruz
+import datetime
 
-# IP adresini ve pencere adını tanımla
+#YOLOv5 modelinin çağrılması
+model = YOLO("last.pt")
+
+# IP adresi ile video akışı bağlantısı
 url = 'http://192.168.43.151/'
-cv2.namedWindow("live transmission", cv2.WINDOW_AUTOSIZE)
 
-# kare sayacını tanımla
-counter = 0
-
+# Video akışı için sonsuz bir döngü
 while True:
-    # her 3 karede bir kameradan görüntü al ve resim kaydet
-    if counter == 0 or counter % 3 == 0:
-        img_resp = urllib.request.urlopen(url + 'cam-hi.jpg')
-        imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
-        frame = cv2.imdecode(imgnp, -1)
+# Video akışı alma
+    img_resp = urllib.request.urlopen(url + 'cam-hi.jpg')
+    imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+    kamera = cv2.imdecode(imgnp, -1)
+    # Nesne tespiti işlemini gerçekleştirmek için görüntüyü model kullanarak işleme sokuyoruz
+    de_out=model.predict(source=kamera, conf=0.2, show=True, device='cpu')
 
-        # RGB görüntüyü HSV renk uzayına dönüştür
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-        # Mavi renk aralığı
-        lower_blue = np.array([0, 50, 50])
-        upper_blue = np.array([10, 255, 255])
-
-        # Mavi renk alanlarını bul
-        mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-        # Mavi renk algılandıysa bounding box çiz ve resim kaydet
-        if np.sum(mask) > 10000:
-            contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-            for contour in contours:
-                x, y, w, h = cv2.boundingRect(contour)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                cv2.imwrite('public/image.jpg', frame)
-
-        # Görüntüyü ekranda göster
-        cv2.imshow("live transmission", frame)
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
-        counter += 1
-
-    # her iki karede bir görüntüyü sadece ekranda göster
-    else:
-        img_resp = urllib.request.urlopen(url + 'cam-hi.jpg')
-        imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
-        frame = cv2.imdecode(imgnp, -1)
-        cv2.imshow("live transmission", frame)
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
-        counter += 1
-
-# Tüm pencereleri kapat
-cv2.destroyAllWindows()
+    # Nesne tespiti sonucunda en az bir nesne tespit edilmişse
+    if len(de_out) != 0:
+        isCompress = 0
+        
+        # Tüm tespit edilen nesneler için
+        for i in range(len(de_out[0])):
+            boxes = de_out[0].boxes
+            box = boxes[i]
+            clsID =boxes.cls.numpy()[0]
+            conf = box.conf.numpy()[0]
+            bb = box.xyxy.numpy()[0]
+            print(datetime.datetime.now()) # Tespit anını yazdır
+            print(clsID) # Tespit edilen nesnenin sınıfını yazdır
+            
+            # Eğer tespit edilen nesne bir ID'si '0' ise
+            if clsID==0:
+                cv2.imwrite('public/image.jpg', kamera) # Görüntüyü kaydet
