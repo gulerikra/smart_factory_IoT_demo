@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import urllib.request
-import mediapipe as mp
 import cv2
 from ultralytics import YOLO
 import datetime
