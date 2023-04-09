@@ -1,24 +1,3 @@
-# import cv2
-# import time
-
-# # Kamera bağlantısını başlat
-# cap = cv2.VideoCapture(0)
-# # Sayacı başlat
-# counter = 0
-
-# while True:
-#     # Kamera görüntüsünü oku
-#     ret, frame = cap.read()
-
-#     # Görüntüyü diske kaydet
-#     cv2.imwrite("public/image.jpg", frame)
-
-#     # 3 saniye bekle
-#     time.sleep(3)
-
-# # Kamera bağlantısını kapat
-# cap.release()
-
 import cv2
 import numpy as np
 import urllib.request
@@ -39,22 +18,26 @@ while True:
     imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
     kamera = cv2.imdecode(imgnp, -1)
     # Nesne tespiti işlemini gerçekleştirmek için görüntüyü model kullanarak işleme sokuyoruz
-    de_out=model.predict(source=kamera, conf=0.2, show=True, device='cpu')
+    de_out=model.predict(source=kamera, conf=0.1, show=True, device='cpu')
 
     # Nesne tespiti sonucunda en az bir nesne tespit edilmişse
     if len(de_out) != 0:
         isCompress = 0
-        
+        img_copy = kamera.copy()  # Make a copy of the original image to draw bounding boxes on
+
         # Tüm tespit edilen nesneler için
         for i in range(len(de_out[0])):
             boxes = de_out[0].boxes
             box = boxes[i]
-            clsID =boxes.cls.numpy()[0]
+            clsID = boxes.cls.numpy()[0]
             conf = box.conf.numpy()[0]
             bb = box.xyxy.numpy()[0]
             print(datetime.datetime.now()) # Tespit anını yazdır
             print(clsID) # Tespit edilen nesnenin sınıfını yazdır
             
-            # Eğer tespit edilen nesne bir ID'si '0' ise
-            if clsID==0:
-                cv2.imwrite('public/image.jpg', kamera) # Görüntüyü kaydet
+            # Eğer tespit edilen nesne bir insan ise
+            if clsID == 0:
+                # bounding box çizme
+                cv2.rectangle(img_copy, (int(bb[0]), int(bb[1])), (int(bb[2]), int(bb[3])), (0, 255, 0), 2)
+                cv2.imwrite('public/image.jpg', img_copy) # Görüntüyü kaydet
+
