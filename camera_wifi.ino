@@ -1,17 +1,18 @@
 #include <WebServer.h>
 #include <WiFi.h>
 #include <esp32cam.h>
+#include <WiFi.h>
+#include <WiFiClient.h>
+#define gpioPin 12
 
 int pin13 = 13; 
-
+// const char* WIFI_SSID = "ikra";
+// const char* WIFI_PASS = "iKranur8";
 const char* WIFI_SSID = "ikra";
 const char* WIFI_PASS = "iKranur8";
-
 WebServer server(80);
-
-static auto loRes = esp32cam::Resolution::find(320, 240);
-static auto midRes = esp32cam::Resolution::find(350, 530);
-static auto hiRes = esp32cam::Resolution::find(800, 600);
+WiFiClient client;
+static auto hiRes = esp32cam::Resolution::find(800, 800);
 
 void serveJpg()
 {
@@ -30,13 +31,6 @@ void serveJpg()
   frame->writeTo(client);
 }
 
-void handleJpgLo()
-{
-  if (!esp32cam::Camera.changeResolution(loRes)) {
-    Serial.println("SET-LO-RES FAIL");
-  }
-  serveJpg();
-}
 
 void handleJpgHi()
 {
@@ -46,17 +40,10 @@ void handleJpgHi()
   serveJpg();
 }
 
-void handleJpgMid()
-{
-  if (!esp32cam::Camera.changeResolution(midRes)) {
-    Serial.println("SET-MID-RES FAIL");
-  }
-  serveJpg();
-}
-
 void setup() {
   Serial.begin(115200);
   pinMode(pin13, OUTPUT);
+  pinMode(gpioPin, INPUT);
 
   {
     using namespace esp32cam;
@@ -91,13 +78,9 @@ void setup() {
 
   Serial.print("http://");
   Serial.println(WiFi.localIP());
-  Serial.println("  /cam-lo.jpg");
   Serial.println("  /cam-hi.jpg");
-  Serial.println("  /cam-mid.jpg");
 
-  server.on("/cam-lo.jpg", handleJpgLo);
   server.on("/cam-hi.jpg", handleJpgHi);
-  server.on("/cam-mid.jpg", handleJpgMid);
 
   server.begin();
 }
@@ -109,4 +92,29 @@ void loop() {
     digitalWrite(pin13, LOW); // İnternet bağlantısı yoksa pin13 LOW olur
   }
   server.handleClient();
+
+  if (client.connect("192.168.43.9", 3000)) { // bilgisayarın ip adresi ve port
+      int pinState = digitalRead(gpioPin);
+      Serial.println(pinState);
+    
+      // Create the HTTP request
+      String request = "POST /data HTTP/1.1\r\n";
+      request += "Host: localhost\r\n";
+      request += "Content-Type: application/x-www-form-urlencoded\r\n";
+      request += "Content-Length: 1\r\n\r\n"; //10 karakter kadar veri gönderir
+      request += String(pinState); // pinState değeri veri olarak eklenir
+      Serial.println(request);
+
+    // Send the HTTP request to the server
+      client.print(request);
+
+    // Read the response from the server
+    while (client.available()) {
+      String line = client.readStringUntil('\r');
+      Serial.print(line);
+    }
+    // Disconnect from the server
+    client.stop();
+  }
+
 }
