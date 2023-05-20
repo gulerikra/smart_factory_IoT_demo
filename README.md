@@ -1,6 +1,6 @@
 # muhtas-espcam
 
-![WhatsApp Image 2023-03-02 at 23 31 57](https://github.com/gulerikra/muhtas-espcam/assets/62421679/eda72dfc-8d34-439d-9c90-85f437ffb6d6)
+![WhatsApp Image 2023-03-02 at 23 31 57](https://github.com/gulerikra/muhtas-espcam/assets/62421679/1be1af98-5978-417c-908f-153e7669fd95)
 
 TAMAMLANDI:
  
