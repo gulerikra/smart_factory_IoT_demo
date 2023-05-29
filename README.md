@@ -18,18 +18,6 @@ motor sinyalini frontende göster
 
 EKSİKLER:
 
-devre tammalandı sadece headerlar değişecek
-
-frontende resim ve motor sinayli ayrı kodlarda onu birleştirip tek ekranda ikisini de göster
-
-nesne seç
-
 kendi nesneni eğit ve dene
 
-çekilen resimleri bi yere kaydettir ya da öyle bi şey, belki klasörde de kaydedilebilr isimleri değişken haldeyken falan 
-
-belki kutu mu tu ayralanır ortam hazırlanır konvonun siyah bandı çıkıyor oraya bi şeyler ayarla sopa gibi
-
-5V besleme sinyali nasıl olacak ??
-
-
+frontende resim ve motor sinayli ayrı kodlarda onu birleştirip tek ekranda ikisini de göster
