@@ -14,10 +14,9 @@ Motor sinyali için arduino koduna gpio verisini javascripte aktarma ekle
 
 motor sinyalini frontende göster
 
+kendi nesneni eğit ve dene iyi gibi yurtta denedim
 **********************************************************************************************************
 
 EKSİKLER:
-
-kendi nesneni eğit ve dene
 
 frontende resim ve motor sinayli ayrı kodlarda onu birleştirip tek ekranda ikisini de göster
