@@ -4,14 +4,18 @@ Bu çalışmada, konveyör bant üzerinden akmakta olan doğru ve hatalı üreti
 
 PROJE ŞEMASI
 
-![image (1)](https://github.com/gulerikra/muhtas-espcam/assets/62421679/04332e87-99f4-4960-bead-6d68c51bdf0b)
+![image (1)](https://github.com/gulerikra/smart_factory_IoT_demo/assets/62421679/dae27f64-25ef-4990-955d-adaf363a42ef)
+
 
 DEVRE GERÇEKLEMESİ
 
-![bvcxc](https://github.com/gulerikra/muhtas-espcam/assets/62421679/960dff00-b88b-452a-8b21-0c11266a6a01)
+![bvcxc](https://github.com/gulerikra/smart_factory_IoT_demo/assets/62421679/0381ca2e-233e-4d69-8b96-102105a5446e)
+
 
 
 PROJE VİDEOSU
 
-https://github.com/gulerikra/muhtas-espcam/assets/62421679/b7d43c9a-9d58-4bf5-abd7-1413a14a6d78
+
+https://github.com/gulerikra/smart_factory_IoT_demo/assets/62421679/8f566828-c90f-4382-902b-b82db885831d
+
 
