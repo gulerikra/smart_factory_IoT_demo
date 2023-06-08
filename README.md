@@ -1,22 +1,15 @@
 # muhtas-espcam
 
-![WhatsApp Image 2023-03-02 at 23 31 57](https://github.com/gulerikra/muhtas-espcam/assets/62421679/1be1af98-5978-417c-908f-153e7669fd95)
+Bu çalışmada, konveyör bant üzerinden akmakta olan doğru ve hatalı üretilen ürünlerin bir kamera aracılığıyla makine öğrenmesi yöntemleri kullanılarak tespit edilmesi ve tespit edilen hatalı ürün görselinin kablosuz haberleşme yardımıyla web sunucuya aktarılması ve üretim sinyali ile birlikte üretim hattının anlık olarak izlenmesi hedeflenmektedir. 
 
-TAMAMLANDI:
- 
-motor sinyali alınıyor
+PROJE ŞEMASI
 
-yolo kullanılarak kamerdan nesne detect edilebiliyor
+![image (1)](https://github.com/gulerikra/muhtas-espcam/assets/62421679/04332e87-99f4-4960-bead-6d68c51bdf0b)
 
-detect edilmiş nesne frontend'te görünüyor ve görüntü yenilenince yenileniyor
 
-Motor sinyali için arduino koduna gpio verisini javascripte aktarma ekle
 
-motor sinyalini frontende göster
 
-kendi nesneni eğit ve dene iyi gibi yurtta denedim
-**********************************************************************************************************
+PROJE VİDEOSU
 
-EKSİKLER:
+https://github.com/gulerikra/muhtas-espcam/assets/62421679/b7d43c9a-9d58-4bf5-abd7-1413a14a6d78
 
-frontende resim ve motor sinayli ayrı kodlarda onu birleştirip tek ekranda ikisini de göster
