@@ -1,3 +1,4 @@
+//esp32-cam için internete bağlanma ve kamera ayarı yapma
 #include <WebServer.h>
 #include <WiFi.h>
 #include <esp32cam.h>
@@ -29,7 +30,6 @@ void serveJpg()
   WiFiClient client = server.client();
   frame->writeTo(client);
 }
-
 
 void handleJpgHi()
 {
@@ -100,19 +100,16 @@ void loop() {
       String request = "POST /data HTTP/1.1\r\n";
       request += "Host: localhost\r\n";
       request += "Content-Type: application/x-www-form-urlencoded\r\n";
-      request += "Content-Length: 1\r\n\r\n"; //10 karakter kadar veri gönderir
+      request += "Content-Length: 1\r\n\r\n"; //1 karakter kadar veri gönderir
       request += String(pinState); // pinState değeri veri olarak eklenir
       Serial.println(request);
 
-    // Send the HTTP request to the server
       client.print(request);
 
-    // Read the response from the server
     while (client.available()) {
       String line = client.readStringUntil('\r');
       Serial.print(line);
     }
-    // Disconnect from the server
     client.stop();
   }
 
