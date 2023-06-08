@@ -1,8 +1,9 @@
+//esp32-cam gpio pininden veri alma ve html ekranında gösterme
 const http = require('http');
 const WebSocket = require('ws');
 const port = 3000;
 
-let status = ''; // Başlangıçta boş bir status değişkeni oluşturulur
+let status = ''; 
 
 const wss = new WebSocket.Server({ noServer: true });
 
@@ -42,7 +43,7 @@ const requestHandler = (request, response) => {
           </script>
         </body>
       </html>
-    `); // status değişkenini HTML sayfasına yazdırır
+    `); 
     response.end();
   });
 };
