@@ -6,10 +6,9 @@
 #define gpioPin 12
 
 int pin13 = 13; 
-// const char* WIFI_SSID = "ikra";
-// const char* WIFI_PASS = "iKranur8";
-const char* WIFI_SSID = "ikra";
-const char* WIFI_PASS = "iKranur8";
+
+const char* WIFI_SSID = "ssid";
+const char* WIFI_PASS = "password";
 WebServer server(80);
 WiFiClient client;
 static auto hiRes = esp32cam::Resolution::find(800, 800);
