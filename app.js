@@ -4,7 +4,6 @@ const { exec } = require('child_process');
 
 app.use(express.static('public'));
 
-// İlk resim dosya adını ayarla
 let imageFilename = "image.jpg";
 
 exec('python camera.py', (error, stdout, stderr) => {
@@ -16,12 +15,8 @@ exec('python camera.py', (error, stdout, stderr) => {
   console.error(`stderr: ${stderr}`);
 });
 
-// Periyodik olarak yeni görüntüleri kontrol edin ve dosya adını güncelleyin
 setInterval(() => {
   let newFilename = null;
-  // Yeni resim dosya adlarını kontrol etme kodunuz buraya gelir
-  // Örneğin, "public" dizinindeki dosyaların değiştirilme zamanını kontrol edebilirsiniz.
-  // Yeni bir görüntü bulunursa, yeni dosyanın adını yeni Dosyaadı olarak ayarlayın
   if (newFilename !== null && newFilename !== imageFilename) {
     // Yeni bir resim bulundu, dosya adını güncelleyin ve konsola bildirin
     console.log(`New image found: ${newFilename}`);
@@ -32,9 +27,8 @@ setInterval(() => {
   }
 }, 1000);
 
-// Web sayfasını sunun ve görüntülenen resmi dinamik olarak güncelleyin
-const server = app.listen(3000, function () {
-  console.log('Sunucu 3000 numaralı portta çalışıyor.');
+const server = app.listen(4000, function () {
+  console.log('Sunucu 4000 numarali portta çalisiyor.');
 });
 
 // Socket.IO'yu kurun
@@ -66,33 +60,9 @@ app.get('/', function (req, res) {
         </script>
       </head>
       <body>
-        <h1>Web Kamera</h1>
+        <h1>HATALI GORSEL</h1>
         <img src="/${imageFilename}" alt="Çekilen Resim" width="640" height="480">
       </body>
     </html>
   `);
-});
-
-// http modülünü kullanarak yeni bir sunucu oluşturun
-const http = require('http');
-const port = 4000;
-
-const requestHandler = (request, response) => {
-  let body = '';
-  request.on('data', (data) => {
-    body += data;
-  });
-  request.on('end', () => {
-    console.log(body);
-  });
-  response.end('OK');
-};
-
-const newServer = http.createServer(requestHandler);
-
-newServer.listen(port, (err) => {
-  if (err) {
-    return console.log('Something bad happened', err);
-  }
-  console.log(`New server is listening on ${port}`);
 });
