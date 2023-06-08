@@ -6,7 +6,9 @@ PROJE ŞEMASI
 
 ![image (1)](https://github.com/gulerikra/muhtas-espcam/assets/62421679/04332e87-99f4-4960-bead-6d68c51bdf0b)
 
+DEVRE GERÇEKLEMESİ
 
+![bvcxc](https://github.com/gulerikra/muhtas-espcam/assets/62421679/960dff00-b88b-452a-8b21-0c11266a6a01)
 
 
 PROJE VİDEOSU
