@@ -1,6 +1,6 @@
 # IoT üretim hattında kullanılması
 
-Bu çalışmada, konveyör bant üzerinden akmakta olan doğru ve hatalı üretilen ürünlerin bir kamera aracılığıyla makine öğrenmesi yöntemleri kullanılarak tespit edilmesi ve tespit edilen hatalı ürün görselinin kablosuz haberleşme yardımıyla web sunucuya aktarılması ve üretim sinyali ile birlikte üretim hattının anlık olarak izlenmesi hedeflenmektedir. 
+Bu çalışmada, konveyör bant üzerinden akmakta olan doğru ve hatalı üretilen ürünlerin bir kamera aracılığıyla makine öğrenmesi yöntemleri kullanılarak tespit edilmesi ve tespit edilen hatalı ürün görselinin kablosuz haberleşme yardımıyla web sunucuya aktarılması ve üretim sinyali ile birlikte üretim hattının anlık olarak izlenmesi gerçeklenmiştir.
 
 PROJE ŞEMASI
 
