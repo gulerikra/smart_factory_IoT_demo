@@ -19,11 +19,9 @@ exec('python camera.py', (error, stdout, stderr) => {
 setInterval(() => {
   let newFilename = null;
   if (newFilename !== null && newFilename !== imageFilename) {
-    // Yeni bir resim bulundu, dosya adını güncelleyin ve konsola bildirin
     console.log(`New image found: ${newFilename}`);
     imageFilename = newFilename;
 
-    // Görüntüyü güncellemek için tüm bağlı istemcilere bir mesaj gönderin
     io.emit('image', imageFilename);
   }
 }, 1000);
@@ -32,15 +30,12 @@ const server = app.listen(4000, function () {
   console.log('Sunucu 4000 numarali portta çalisiyor.');
 });
 
-// Socket.IO'yu kurun
 const io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
-// Bağlandıklarında istemciye geçerli resim dosya adını gönder
   socket.emit('image', imageFilename);
 });
 
-// HTML dosyasını istemciye gönder
 app.get('/', function (req, res) {
   res.send(`
     <!DOCTYPE html>
