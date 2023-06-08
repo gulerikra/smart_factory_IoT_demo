@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import urllib.request
 import cv2
-from ultralytics import YOLO # YOLOv5 modeli için ultralytics kütüphanesini kullanıyoruz
+from ultralytics import YOLO # YOLOv8 modeli için ultralytics kütüphanesini kullanıyoruz
 import datetime
 
-#YOLOv5 modelinin çağrılması
+#YOLOv8 modelinin çağrılması
 model = YOLO("last.pt")
 
 # IP adresi ile video akışı bağlantısı
@@ -23,7 +23,7 @@ while True:
     # Nesne tespiti sonucunda en az bir nesne tespit edilmişse
     if len(de_out) != 0:
         isCompress = 0
-        img_copy = kamera.copy()  # Make a copy of the original image to draw bounding boxes on
+        img_copy = kamera.copy() 
 
         # Tüm tespit edilen nesneler için
         for i in range(len(de_out[0])):
@@ -35,9 +35,7 @@ while True:
             print(datetime.datetime.now()) # Tespit anını yazdır
             print(clsID) # Tespit edilen nesnenin sınıfını yazdır
             
-            # Eğer tespit edilen nesne bir insan ise
             if clsID == 0:
-                # bounding box çizme
                 cv2.rectangle(img_copy, (int(bb[0]), int(bb[1])), (int(bb[2]), int(bb[3])), (0, 255, 0), 2)
                 cv2.imwrite('public/image.jpg', img_copy) # Görüntüyü kaydet
 
