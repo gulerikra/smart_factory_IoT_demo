@@ -96,7 +96,7 @@ void loop() {
       int pinState = digitalRead(gpioPin);
       Serial.println(pinState);
     
-      // Create the HTTP request
+      //  HTTP request oluştur
       String request = "POST /data HTTP/1.1\r\n";
       request += "Host: localhost\r\n";
       request += "Content-Type: application/x-www-form-urlencoded\r\n";
