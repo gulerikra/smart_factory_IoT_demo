@@ -1,3 +1,4 @@
+//esp32-cam kamersaından veri alma, işleme ve html ekranında gösterme
 const express = require('express');
 const app = express();
 const { exec } = require('child_process');
